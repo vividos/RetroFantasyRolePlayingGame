@@ -29,7 +29,7 @@ namespace Game.Android
         {
             base.OnCreate(bundle);
 
-            var game = new TheGame();
+            var game = new TheGame(isTouchEnabledDevice: true, isMobileDevice: true);
             var view = game.Services.GetService(typeof(View)) as View;
 
             this.SetContentView(view);

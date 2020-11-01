@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Game.Core
 {
@@ -10,23 +11,80 @@ namespace Game.Core
     public class TheGame : Microsoft.Xna.Framework.Game
     {
         /// <summary>
-        /// Graphics device manager
+        /// Width of virtual drawing area
         /// </summary>
-        private GraphicsDeviceManager graphics;
+        private const int VirtualWidth = 800;
 
         /// <summary>
-        /// Sprite batch
+        /// Height of virtual drawing area
         /// </summary>
-        private SpriteBatch spriteBatch;
+        private const int VirtualHeight = 480;
+
+        /// <summary>
+        /// Graphics device manager
+        /// </summary>
+        private readonly GraphicsDeviceManager graphics;
+
+        /// <summary>
+        /// Render target for rendering to fixd width 2D canvas
+        /// </summary>
+        private RenderTarget2D renderTarget;
+
+        /// <summary>
+        /// Sprite batch for drawing to render target
+        /// </summary>
+        private SpriteBatch targetBatch;
+
+        /// <summary>
+        /// Indicates if the game is running on a touch enabled device
+        /// </summary>
+        public bool IsTouchDevice { get; private set; }
+
+        /// <summary>
+        /// Screen width of the virtual screen to be scaled to the display
+        /// </summary>
+        public int ScreenWidth { get; private set; }
+
+        /// <summary>
+        /// Screen height
+        /// </summary>
+        public int ScreenHeight { get; private set; }
 
         /// <summary>
         /// Creates a new game object
         /// </summary>
-        public TheGame()
+        /// <param name="isTouchEnabledDevice">
+        /// indicates if the game is running on a touch enabled device
+        /// </param>
+        /// <param name="isMobileDevice">
+        /// indicates if the game is running on a mobile device
+        /// </param>
+        public TheGame(bool isTouchEnabledDevice, bool isMobileDevice)
         {
-            this.graphics = new GraphicsDeviceManager(this);
+            this.IsTouchDevice = isTouchEnabledDevice;
+
+            this.ScreenWidth = isMobileDevice ? VirtualHeight : VirtualWidth;
+            this.ScreenHeight = isMobileDevice ? VirtualWidth : VirtualHeight;
+
+            this.graphics = new GraphicsDeviceManager(this)
+            {
+                IsFullScreen = isMobileDevice,
+                PreferredBackBufferWidth = this.ScreenWidth,
+                PreferredBackBufferHeight = this.ScreenHeight,
+                SupportedOrientations =
+                DisplayOrientation.LandscapeLeft |
+                DisplayOrientation.LandscapeRight |
+                DisplayOrientation.Portrait |
+                DisplayOrientation.PortraitDown
+            };
+
             this.Content.RootDirectory = "Content";
-            this.IsMouseVisible = true;
+
+            this.IsMouseVisible = !isMobileDevice;
+
+            TouchPanel.DisplayHeight = this.ScreenHeight;
+            TouchPanel.DisplayWidth = this.ScreenWidth;
+            TouchPanel.EnableMouseTouchPoint = true;
         }
 
         /// <summary>
@@ -39,6 +97,16 @@ namespace Game.Core
         {
             Window.Title = "Retro Fantasy RPG";
 
+            this.renderTarget = new RenderTarget2D(
+                this.graphics.GraphicsDevice,
+                this.ScreenWidth,
+                this.ScreenHeight,
+                false,
+                SurfaceFormat.Color,
+                DepthFormat.None,
+                this.graphics.GraphicsDevice.PresentationParameters.MultiSampleCount,
+                RenderTargetUsage.DiscardContents);
+
             base.Initialize();
         }
 
@@ -48,9 +116,7 @@ namespace Game.Core
         /// </summary>
         protected override void LoadContent()
         {
-            this.spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            this.targetBatch = new SpriteBatch(this.GraphicsDevice);
         }
 
         /// <summary>
@@ -60,7 +126,8 @@ namespace Game.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
+                Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 this.Exit();
             }
@@ -74,9 +141,69 @@ namespace Game.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.SetRenderTarget(this.renderTarget);
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            // draw currently active screen
             base.Draw(gameTime);
+
+            Rectangle dst = this.CalcDrawRectangle();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            // draw render target
+            GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+
+            this.targetBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
+            this.targetBatch.Draw(this.renderTarget, dst, Color.White);
+            this.targetBatch.End();
+        }
+
+        /// <summary>
+        /// Calculates rectangle to draw in
+        /// </summary>
+        /// <returns>draw rectangle</returns>
+        private Rectangle CalcDrawRectangle()
+        {
+            float outputAspect = Window.ClientBounds.Width / (float)Window.ClientBounds.Height;
+            float preferredAspect = this.ScreenWidth / (float)this.ScreenHeight;
+
+            Rectangle dst;
+
+            if (outputAspect <= preferredAspect)
+            {
+                // output is taller than it is wider, bars on top/bottom
+                int presentHeight = (int)((Window.ClientBounds.Width / preferredAspect) + 0.5f);
+                int barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
+
+                dst = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
+            }
+            else
+            {
+                // output is wider than it is tall, bars left/right
+                int presentWidth = (int)((Window.ClientBounds.Height * preferredAspect) + 0.5f);
+                int barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
+
+                dst = new Rectangle(barWidth, 0, presentWidth, Window.ClientBounds.Height);
+            }
+
+            return dst;
+        }
+
+        /// <summary>
+        /// Disposes of managed resources
+        /// </summary>
+        /// <param name="disposing">true when in Dispose(), false when in finalizer</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.renderTarget.Dispose();
+                this.renderTarget = null;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

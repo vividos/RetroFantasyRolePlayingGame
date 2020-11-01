@@ -14,7 +14,7 @@ namespace Game.Desktop
         [STAThread]
         public static void Main()
         {
-            using (var game = new TheGame())
+            using (var game = new TheGame(isTouchEnabledDevice: false, isMobileDevice: false))
             {
                 game.Run();
             }
