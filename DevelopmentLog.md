@@ -1,5 +1,23 @@
 # Development Log
 
+## 2020-11-02 Day 2: Game data
+
+Today I thought about how to handle the game's data. I want to store the
+game's state when the user closes the app, so the game can be continued from
+where the user left of. Some sort of auto-save functionality. The game state
+can contain the player's current stats, the monsters in the game world and
+objects that can be picked up. We also have static data that never chages,
+e.g. the base map, town layout or the conversation trees for NPCs.
+
+The game state can map to properties in C# classes, and the static game data
+could be modeled as C# static properties of a C# class. So today I wrote a
+GameData that encapsulates both data. Currently the class is only a skeleton
+class, but I wrote a `Save()`, `Load()` and a `Create()` method. For loading
+and saving the game state, I use Newtonsoft.Json to just serializing the game
+data to JSON. `Create()` just generates a new empty game data object, but
+later will be populated with the initial state. The static game data just
+contains two properties, the game's name and subtitle.
+
 ## 2020-11-01 Day 1: Creating projects
 
 Today I set up my little side project, a retro-style, fantasy RPG game. I
