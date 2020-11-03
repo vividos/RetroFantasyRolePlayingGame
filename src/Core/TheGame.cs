@@ -115,7 +115,11 @@ namespace Game.Core
         /// </summary>
         protected override void Initialize()
         {
-            Window.Title = "Retro Fantasy RPG";
+            Window.Title = GameData.GameName;
+            if (!string.IsNullOrEmpty(GameData.GameSubtitle))
+            {
+                Window.Title += ": " + GameData.GameSubtitle;
+            }
 
             this.renderTarget = new RenderTarget2D(
                 this.graphics.GraphicsDevice,
