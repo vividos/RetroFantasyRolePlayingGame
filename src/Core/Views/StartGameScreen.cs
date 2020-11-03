@@ -1,7 +1,11 @@
 ﻿using Game.Core.ViewModels;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Gui;
+using MonoGame.Extended.Gui.Controls;
 using MonoGame.Extended.Screens;
+using System;
+using System.Diagnostics;
 
 namespace Game.Core.Views
 {
@@ -40,7 +44,100 @@ namespace Game.Core.Views
         {
             this.viewModel = new StartGameViewModel();
 
+            this.InitUserInterface(game);
+
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+        }
+
+        /// <summary>
+        /// Initializes user interface
+        /// </summary>
+        /// <param name="game">game instance</param>
+        private void InitUserInterface(TheGame game)
+        {
+            const int ButtonWidth = 260;
+            var backgroundColor = new Color(0, 128, 255);
+            Color textColor = Color.White;
+
+            var startNewGameButton = new Button
+            {
+                Content = "Start new game",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = ButtonWidth,
+                HorizontalAlignment = HorizontalAlignment.Centre,
+            };
+            startNewGameButton.Clicked += this.OnClicked_StartNewGameButton;
+
+            var journeyOnwardButton = new Button
+            {
+                Content = "Journey Onward",
+                BackgroundColor = this.viewModel.IsJourneyOnwardAvail ? backgroundColor : Color.DarkSlateGray,
+                TextColor = textColor,
+                Width = ButtonWidth,
+                HorizontalAlignment = HorizontalAlignment.Centre,
+                IsEnabled = this.viewModel.IsJourneyOnwardAvail,
+            };
+            journeyOnwardButton.Clicked += this.OnClicked_JourneyOnwardButton;
+
+            var exitButton = new Button
+            {
+                Content = "Exit",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = ButtonWidth,
+                HorizontalAlignment = HorizontalAlignment.Centre,
+            };
+            exitButton.Clicked += this.OnClicked_ExitButton;
+
+            var content = new StackPanel
+            {
+                Width = game.ScreenWidth,
+                Height = game.ScreenHeight,
+                Spacing = 8,
+                Items =
+                {
+                    startNewGameButton,
+                    journeyOnwardButton,
+                    exitButton,
+                }
+            };
+
+            game.SetGuiScreenContent(content);
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "start new game" button
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnClicked_StartNewGameButton(object sender, EventArgs args)
+        {
+            this.viewModel.StartNewGame();
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "journey onward" button
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnClicked_JourneyOnwardButton(object sender, EventArgs args)
+        {
+            Debug.Assert(
+                this.viewModel.IsJourneyOnwardAvail,
+                "incorrectly called Clicked header since button must be disabled");
+
+            this.viewModel.JourneyOnward();
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the "exit" button
+        /// </summary>
+        /// <param name="sender">sender object</param>
+        /// <param name="args">event args</param>
+        private void OnClicked_ExitButton(object sender, EventArgs args)
+        {
+            this.Game.Exit();
         }
 
         /// <summary>
@@ -55,7 +152,7 @@ namespace Game.Core.Views
         /// <summary>
         /// Updates screen state, e.g. from keyboard or gamepad state
         /// </summary>
-        /// <param name="gameTime"></param>
+        /// <param name="gameTime">game time; unused</param>
         public override void Update(GameTime gameTime)
         {
             // TODO implement
