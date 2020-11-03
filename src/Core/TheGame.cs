@@ -4,7 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using MonoGame.Extended;
+using MonoGame.Extended.BitmapFonts;
+using MonoGame.Extended.Gui;
+using MonoGame.Extended.Gui.Controls;
 using MonoGame.Extended.Screens;
+using MonoGame.Extended.ViewportAdapters;
+using System;
 
 namespace Game.Core
 {
@@ -32,6 +37,11 @@ namespace Game.Core
         /// Screen manager
         /// </summary>
         private readonly ScreenManager screenManager;
+
+        /// <summary>
+        /// Graphical User Interface system
+        /// </summary>
+        private GuiSystem guiSystem;
 
         /// <summary>
         /// Render target for rendering to fixd width 2D canvas
@@ -128,9 +138,56 @@ namespace Game.Core
         {
             this.targetBatch = new SpriteBatch(this.GraphicsDevice);
 
+            this.SetupUserInterface();
+
             this.screenManager.LoadScreen(
                 new StartGameScreen(this),
                 new MonoGame.Extended.Screens.Transitions.FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+        }
+
+        /// <summary>
+        /// Sets up user interface using MonoGame.Extended.Gui.
+        /// </summary>
+        private void SetupUserInterface()
+        {
+            var viewportAdapter = new DefaultViewportAdapter(this.GraphicsDevice);
+            var guiRenderer = new GuiSpriteBatchRenderer(this.GraphicsDevice, () => Matrix.Identity);
+
+            var guiFont = Content.Load<BitmapFont>("fonts/PixelAzureBondsBitmap24");
+            Skin.CreateDefault(guiFont);
+
+            this.guiSystem = new GuiSystem(viewportAdapter, guiRenderer)
+            {
+                ActiveScreen = new MonoGame.Extended.Gui.Screen
+                {
+                    Content = new StackPanel
+                    {
+                        Width = this.ScreenWidth,
+                        Height = this.ScreenHeight,
+                    }
+                }
+            };
+
+            this.guiSystem.ActiveScreen.Hide();
+        }
+
+        /// <summary>
+        /// Sets new content for the GUI screen. This can be used for game screen classes to set
+        /// a user interface using MonoGame.Extended.Gui.
+        /// </summary>
+        /// <param name="content">content to set, or null if nothing should be displayed</param>
+        public void SetGuiScreenContent(Control content)
+        {
+            if (content != null)
+            {
+                this.guiSystem.ActiveScreen.Content = content;
+                this.guiSystem.ActiveScreen.Show();
+                this.guiSystem.ClientSizeChanged();
+            }
+            else
+            {
+                this.guiSystem.ActiveScreen.Hide();
+            }
         }
 
         /// <summary>
@@ -145,6 +202,8 @@ namespace Game.Core
             {
                 this.Exit();
             }
+
+            this.guiSystem.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -161,6 +220,11 @@ namespace Game.Core
 
             // draw currently active screen
             base.Draw(gameTime);
+
+            if (this.guiSystem.ActiveScreen.IsVisible)
+            {
+                this.guiSystem.Draw(gameTime);
+            }
 
             Rectangle dst = this.CalcDrawRectangle();
 
