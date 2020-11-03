@@ -1,7 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Game.Core.Views;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using MonoGame.Extended;
+using MonoGame.Extended.Screens;
 
 namespace Game.Core
 {
@@ -24,6 +27,11 @@ namespace Game.Core
         /// Graphics device manager
         /// </summary>
         private readonly GraphicsDeviceManager graphics;
+
+        /// <summary>
+        /// Screen manager
+        /// </summary>
+        private readonly ScreenManager screenManager;
 
         /// <summary>
         /// Render target for rendering to fixd width 2D canvas
@@ -85,6 +93,8 @@ namespace Game.Core
             TouchPanel.DisplayHeight = this.ScreenHeight;
             TouchPanel.DisplayWidth = this.ScreenWidth;
             TouchPanel.EnableMouseTouchPoint = true;
+
+            this.screenManager = this.Components.Add<ScreenManager>();
         }
 
         /// <summary>
@@ -117,6 +127,10 @@ namespace Game.Core
         protected override void LoadContent()
         {
             this.targetBatch = new SpriteBatch(this.GraphicsDevice);
+
+            this.screenManager.LoadScreen(
+                new StartGameScreen(this),
+                new MonoGame.Extended.Screens.Transitions.FadeTransition(GraphicsDevice, Color.Black, 0.5f));
         }
 
         /// <summary>
@@ -143,7 +157,7 @@ namespace Game.Core
         {
             GraphicsDevice.SetRenderTarget(this.renderTarget);
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // draw currently active screen
             base.Draw(gameTime);
