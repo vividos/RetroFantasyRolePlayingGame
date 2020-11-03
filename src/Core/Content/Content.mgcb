@@ -10,10 +10,12 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:C:\Users\Michael\.nuget\packages\MonoGame.Extended.Content.Pipeline\3.8.0\tools\Newtonsoft.Json.dll
+/reference:C:\Users\Michael\.nuget\packages\MonoGame.Extended.Content.Pipeline\3.8.0\tools\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
-#begin fonts/BlackcastleMF48.spritefont
+#begin fonts/BlackCastleMF48.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
@@ -26,4 +28,21 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:fonts/PixelAzureBonds24.spritefont
+
+#begin fonts/PixelAzureBondsBitmap24.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:fonts/PixelAzureBondsBitmap24.fnt
+
+#begin fonts/PixelAzureBondsBitmap24Texture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:fonts/PixelAzureBondsBitmap24Texture.png
 
