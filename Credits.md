@@ -2,7 +2,13 @@
 
 ## Libraries
 
-The game uses the MonoGame libraries to implement the game.
+The game uses the [MonoGame](https://www.monogame.net/) libraries to implement
+the game. The library is licensed under the
+[Microsoft Public License](https://github.com/MonoGame/MonoGame/blob/develop/LICENSE.txt).
+
+The game uses the [MonoGame.Extended](https://github.com/craftworkgames/MonoGame.Extended)
+libraries to implement the game. The library is licensed under the
+[MIT License](https://github.com/craftworkgames/MonoGame.Extended/blob/develop/LICENSE).
 
 ## Assets
 
