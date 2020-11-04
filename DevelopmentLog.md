@@ -1,5 +1,33 @@
 # Development Log
 
+## 2020-11-03 Day 3: Graphical User Interface
+
+Now it's time to do the actual user interface, I thought. My idea is to have
+two different game screens, a start screen and the actual in-game screen. The
+start screen should display the title of the game in a nice RPG style font,
+and some buttons to start a new game and to continue a saved game.
+
+I looked at previous (unfinished) game projects and decided to use
+`MonoGame.Extended`, as I already had some code lying around. The NuGet
+package `MonoGame.Extended.Screens` offers a screen component that can
+switch between different logical screens that all have their own
+`LoadContent()/Update()/Draw()` calls, just like a `Game` object. This
+helps separating the logic code of both pages.
+
+I also thought about how to logically structure the code to separate drawing
+the world from actually storing and updating the world. As I wrote some
+Xamarin apps before, the MVVM (Model View ViewModel) pattern naturally came to
+my mind.
+
+MVVM works as follows: You have a View class (or several views, e.g. buttons)
+and the views are able to draw themselves. The state of the view (e.g. is a
+button active, or what to do when a button is pressed) is coded in the
+ViewModel class that acts as a binding class to the Model. The model classes
+describe the game world and its logic, e.g. the current map, the players's
+stats and what monsters are running around.
+
+Tomorrow more about the UI...
+
 ## 2020-11-02 Day 2: Game data
 
 Today I thought about how to handle the game's data. I want to store the
