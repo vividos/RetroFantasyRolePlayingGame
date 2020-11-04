@@ -1,4 +1,5 @@
-﻿using Game.Core.Views;
+﻿using Game.Core.Models;
+using Game.Core.Views;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,7 +10,6 @@ using MonoGame.Extended.Gui;
 using MonoGame.Extended.Gui.Controls;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
-using System;
 
 namespace Game.Core
 {
