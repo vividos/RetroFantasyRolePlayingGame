@@ -1,5 +1,7 @@
 ﻿using Game.Core;
+using Game.Core.Models;
 using System;
+using System.IO;
 
 namespace Game.Desktop
 {
@@ -16,6 +18,10 @@ namespace Game.Desktop
         {
             using (var game = new TheGame(isTouchEnabledDevice: false, isMobileDevice: false))
             {
+                game.SavegameFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    GameData.GameName);
+
                 game.Run();
             }
         }

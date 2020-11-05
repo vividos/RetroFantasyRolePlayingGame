@@ -69,6 +69,12 @@ namespace Game.Core
         public int ScreenHeight { get; private set; }
 
         /// <summary>
+        /// The folder name where savegames are stored; may not exist yet
+        /// </summary>
+        public string SavegameFolder { get; set; }
+
+        /// <summary>
+        /// <summary>
         /// Creates a new game object
         /// </summary>
         /// <param name="isTouchEnabledDevice">
