@@ -72,7 +72,7 @@ namespace Game.Core.Views
             var journeyOnwardButton = new Button
             {
                 Content = "Journey Onward",
-                BackgroundColor = this.viewModel.IsJourneyOnwardAvail ? backgroundColor : Color.DarkSlateGray,
+                BackgroundColor = backgroundColor,
                 TextColor = textColor,
                 Width = ButtonWidth,
                 HorizontalAlignment = HorizontalAlignment.Centre,
@@ -97,6 +97,11 @@ namespace Game.Core.Views
                 Spacing = 8,
                 Items =
                 {
+                    // used to move the buttons down, below the title text
+                    new StackPanel
+                    {
+                        Height = 200,
+                    },
                     startNewGameButton,
                     journeyOnwardButton,
                     exitButton,

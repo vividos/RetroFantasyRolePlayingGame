@@ -91,9 +91,7 @@ namespace Game.Core
                 PreferredBackBufferHeight = this.ScreenHeight,
                 SupportedOrientations =
                 DisplayOrientation.LandscapeLeft |
-                DisplayOrientation.LandscapeRight |
-                DisplayOrientation.Portrait |
-                DisplayOrientation.PortraitDown
+                DisplayOrientation.LandscapeRight
             };
 
             this.Content.RootDirectory = "Content";
@@ -158,6 +156,7 @@ namespace Game.Core
             var guiRenderer = new GuiSpriteBatchRenderer(this.GraphicsDevice, () => Matrix.Identity);
 
             var guiFont = Content.Load<BitmapFont>("fonts/PixelAzureBondsBitmap24");
+            BitmapFont.UseKernings = false;
             Skin.CreateDefault(guiFont);
 
             this.guiSystem = new GuiSystem(viewportAdapter, guiRenderer)

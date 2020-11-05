@@ -17,7 +17,7 @@ namespace Game.Android
         AlwaysRetainTaskState = true,
         Theme = "@style/SplashTheme",
         LaunchMode = LaunchMode.SingleInstance,
-        ScreenOrientation = ScreenOrientation.FullUser,
+        ScreenOrientation = ScreenOrientation.Landscape | ScreenOrientation.ReverseLandscape,
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.Keyboard | ConfigChanges.KeyboardHidden | ConfigChanges.ScreenSize)]
     public class MainActivity : AndroidGameActivity
     {
