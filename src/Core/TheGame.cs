@@ -11,6 +11,7 @@ using MonoGame.Extended.Gui.Controls;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
 using System.Diagnostics;
+using System.IO;
 
 namespace Game.Core
 {
@@ -75,6 +76,10 @@ namespace Game.Core
         public string SavegameFolder { get; set; }
 
         /// <summary>
+        /// Contains the currently loaded game data
+        /// </summary>
+        public GameData CurrentGameData { get; set; }
+
         /// <summary>
         /// Creates a new game object
         /// </summary>
@@ -299,6 +304,30 @@ namespace Game.Core
             }
 
             return dst;
+        }
+
+        /// <summary>
+        /// Called when the game is unloaded
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
+
+            // store current game data when user closes the game
+            if (this.CurrentGameData != null)
+            {
+                if (!Directory.Exists(this.SavegameFolder))
+                {
+                    Directory.CreateDirectory(this.SavegameFolder);
+                }
+
+                var savegameFilename = Path.Combine(this.SavegameFolder, GameData.SavegameFilename);
+
+                using (var stream = new FileStream(savegameFilename, FileMode.Create))
+                {
+                    this.CurrentGameData.Save(stream);
+                }
+            }
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using Game.Core.Models;
 using System.Diagnostics;
+using System.IO;
 
 namespace Game.Core.ViewModels
 {
@@ -14,6 +15,11 @@ namespace Game.Core.ViewModels
         private readonly TheGame game;
 
         /// <summary>
+        /// Filename of the save game
+        /// </summary>
+        private readonly string savegameFilename;
+
+        /// <summary>
         /// The game's title
         /// </summary>
         public string GameTitle => GameData.GameName;
@@ -26,7 +32,7 @@ namespace Game.Core.ViewModels
         /// <summary>
         /// Indicates if "journey onward" button is available
         /// </summary>
-        public bool IsJourneyOnwardAvail { get; set; }
+        public bool IsJourneyOnwardAvail { get; private set; }
 
         /// <summary>
         /// Creates a new view model object
@@ -35,6 +41,10 @@ namespace Game.Core.ViewModels
         public StartGameViewModel(TheGame game)
         {
             this.game = game;
+
+            this.savegameFilename = Path.Combine(game.SavegameFolder, GameData.SavegameFilename);
+
+            this.IsJourneyOnwardAvail = File.Exists(this.savegameFilename);
         }
 
         /// <summary>
@@ -43,7 +53,8 @@ namespace Game.Core.ViewModels
         /// </summary>
         public void StartNewGame()
         {
-            // TODO implement
+            this.game.CurrentGameData = GameData.Create();
+
             this.game.NavigateToScreen(GameScreenType.IngameScreen);
         }
 
@@ -55,7 +66,11 @@ namespace Game.Core.ViewModels
         {
             Debug.Assert(this.IsJourneyOnwardAvail, "journey onward must be available");
 
-            // TODO implement
+            using (var stream = new FileStream(this.savegameFilename, FileMode.Open))
+            {
+                this.game.CurrentGameData = GameData.Load(stream);
+            }
+
             this.game.NavigateToScreen(GameScreenType.IngameScreen);
         }
     }

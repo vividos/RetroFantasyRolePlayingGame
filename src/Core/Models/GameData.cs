@@ -19,6 +19,11 @@ namespace Game.Core.Models
         public static string GameSubtitle { get; set; } = "The Test Of Data";
 
         /// <summary>
+        /// The filename of the save game that stores the game data
+        /// </summary>
+        public static string SavegameFilename { get; } = "retro-fantasy-test-of-data.json";
+
+        /// <summary>
         /// Creates a new game data instance
         /// </summary>
         /// <returns>game data instance</returns>
