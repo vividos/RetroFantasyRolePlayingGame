@@ -10,6 +10,7 @@ using MonoGame.Extended.Gui;
 using MonoGame.Extended.Gui.Controls;
 using MonoGame.Extended.Screens;
 using MonoGame.Extended.ViewportAdapters;
+using System.Diagnostics;
 
 namespace Game.Core
 {
@@ -148,9 +149,7 @@ namespace Game.Core
 
             this.SetupUserInterface();
 
-            this.screenManager.LoadScreen(
-                new StartGameScreen(this),
-                new MonoGame.Extended.Screens.Transitions.FadeTransition(GraphicsDevice, Color.Black, 0.5f));
+            this.NavigateToScreen(GameScreenType.StartGameScreen);
         }
 
         /// <summary>
@@ -196,6 +195,30 @@ namespace Game.Core
             else
             {
                 this.guiSystem.ActiveScreen.Hide();
+            }
+        }
+
+        /// <summary>
+        /// Navigates to a new screen
+        /// </summary>
+        /// <param name="type">game screen type</param>
+        public void NavigateToScreen(GameScreenType type)
+        {
+            var transition = new MonoGame.Extended.Screens.Transitions.FadeTransition(GraphicsDevice, Color.Black, 0.5f);
+
+            switch (type)
+            {
+                case GameScreenType.StartGameScreen:
+                    this.screenManager.LoadScreen(new StartGameScreen(this), transition);
+                    break;
+
+                case GameScreenType.IngameScreen:
+                    this.screenManager.LoadScreen(new IngameScreen(this), transition);
+                    break;
+
+                default:
+                    Debug.Assert(false, "game screen type not handled yet!");
+                    break;
             }
         }
 

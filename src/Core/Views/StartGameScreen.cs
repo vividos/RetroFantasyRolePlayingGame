@@ -42,7 +42,7 @@ namespace Game.Core.Views
         public StartGameScreen(TheGame game)
             : base(game)
         {
-            this.viewModel = new StartGameViewModel();
+            this.viewModel = new StartGameViewModel(game);
 
             this.InitUserInterface(game);
 

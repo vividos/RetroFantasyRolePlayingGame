@@ -9,6 +9,11 @@ namespace Game.Core.ViewModels
     internal class StartGameViewModel
     {
         /// <summary>
+        /// Game instance
+        /// </summary>
+        private readonly TheGame game;
+
+        /// <summary>
         /// The game's title
         /// </summary>
         public string GameTitle => GameData.GameName;
@@ -24,12 +29,22 @@ namespace Game.Core.ViewModels
         public bool IsJourneyOnwardAvail { get; set; }
 
         /// <summary>
+        /// Creates a new view model object
+        /// </summary>
+        /// <param name="game">game object</param>
+        public StartGameViewModel(TheGame game)
+        {
+            this.game = game;
+        }
+
+        /// <summary>
         /// Starts a new game by creating a new game data object and changing to the ingame
         /// screen.
         /// </summary>
         public void StartNewGame()
         {
             // TODO implement
+            this.game.NavigateToScreen(GameScreenType.IngameScreen);
         }
 
         /// <summary>
@@ -41,6 +56,7 @@ namespace Game.Core.ViewModels
             Debug.Assert(this.IsJourneyOnwardAvail, "journey onward must be available");
 
             // TODO implement
+            this.game.NavigateToScreen(GameScreenType.IngameScreen);
         }
     }
 }
