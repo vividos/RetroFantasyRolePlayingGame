@@ -1,4 +1,23 @@
-# Development Log
+﻿# Development Log
+
+## 2020-11-05 Day 5: Bug fixes and game data serialization
+
+I found a fix for the Android bug; apparently, the Android didn't pick up the
+Content folder from the .NET Standard project. I would have been an elegant
+way to share the Content folder this way, but oh well. Now I'm referencing the
+Content.mgcb file from both projects.
+
+I also fixed the start game screen layout by just inserting another
+transparent view above the buttons. I also added an initial screenshot to the
+front page.
+
+Another thing I have implemented was the actual loading and saving of the
+savegame. On Android the game data is stored in the app's data folder. On
+Windows it is stored in the roaming AppData folder. The game data is still
+empty, but the facílity is already there.
+
+Now it's time to implement the actual in-game screen, map drawing, movement
+controls, game commands and more...
 
 ## 2020-11-04 Day 4: Reviewing bugs
 
