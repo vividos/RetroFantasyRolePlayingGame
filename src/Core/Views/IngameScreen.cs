@@ -50,13 +50,16 @@ namespace Game.Core.Views
                 FillColor = Color.DarkOrange,
             };
 
-            var messageScrollView = new Box
+            var messageScrollView = new MessageScrollView
             {
                 Height = 200,
                 Width = 320,
-                BorderThickness = 0,
-                FillColor = Color.LawnGreen,
             };
+
+            messageScrollView.Bindings.Add(
+                new Binding(this.viewModel.MessageScrollViewModel,
+                nameof(MessageScrollViewModel.VisibleLines),
+                nameof(MessageScrollView.MessageScrollLines)));
 
             UniformGrid controlButtonsGrid = this.GetControlButtonsGrid();
 

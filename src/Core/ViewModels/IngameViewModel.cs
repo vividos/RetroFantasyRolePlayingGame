@@ -6,6 +6,11 @@
     internal class IngameViewModel
     {
         /// <summary>
+        /// View model for the message scroll
+        /// </summary>
+        public MessageScrollViewModel MessageScrollViewModel { get; }
+
+        /// <summary>
         /// Interaction mode for the ingame view model
         /// </summary>
         internal enum InteractionMode
@@ -62,6 +67,14 @@
             /// Shows an options menu
             /// </summary>
             Options,
+        }
+
+        /// <summary>
+        /// Creates a new view model object for the in-game screen
+        /// </summary>
+        public IngameViewModel()
+        {
+            this.MessageScrollViewModel = new MessageScrollViewModel(11, 20);
         }
 
         /// <summary>
