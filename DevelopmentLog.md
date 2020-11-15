@@ -1,5 +1,36 @@
 ﻿# Development Log
 
+## 2020-11-06 Day 6: Initial in-game screen layout
+
+Today I tried out how the in-game screen could look. Various RPGs from the
+good old days have different approaches for the user interface. Ultima 1-2
+uses an almost full-screen map with with some scrolled lines of text on the
+bottom. Ultima 3 switched to a square map on the left, maximizing the map's
+size, and put party roster and messages to the left.
+
+Other games, e.g. the
+gold box series, had an almost tiny 3D map view, a huge party roster and some
+message lines on the bottom. The tactical combat screen uses a different
+layout, maximizing the map and using an isometric (or better, axonometric)
+projection.
+
+I played around with positioning the various game windows that I'd like to
+have, and came up with this layout:
+
+![Ingame screen, version 1](images/ingame-screen-v1.png)
+
+The map should cover all of the left side, whereas the party list, text scroll
+and action buttons should be on the right. The map should be square, using
+Ultima styled tiles, with a tile size of 11x11, just as the original games.
+This also allows for tactical combat screens to use the same user interface.
+The party list should show all party members, along with some stats like
+vitality. I don't know yet if the party list must be scrollable.
+
+The text scroll, on the other side, should be scrollable. The Gui framework
+currently has no scroll bar, so this may mean to develop one. The action
+buttons should be the easiest. They can be used to start actions like "Look",
+"Talk", "Use" and "Attack" and should also have keyboard key equivalents.
+
 ## 2020-11-05 Day 5: Bug fixes and game data serialization
 
 I found a fix for the Android bug; apparently, the Android didn't pick up the
