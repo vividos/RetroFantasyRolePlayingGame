@@ -58,13 +58,7 @@ namespace Game.Core.Views
                 FillColor = Color.LawnGreen,
             };
 
-            var controlButtonsGrid = new Box
-            {
-                Height = 80,
-                Width = 320,
-                BorderThickness = 0,
-                FillColor = Color.Pink,
-            };
+            UniformGrid controlButtonsGrid = this.GetControlButtonsGrid();
 
             var leftStackPanel = new StackPanel
             {
@@ -107,6 +101,88 @@ namespace Game.Core.Views
             };
 
             game.SetGuiScreenContent(content);
+        }
+
+        /// <summary>
+        /// Gets the uniform grid for the action control buttons
+        /// </summary>
+        /// <returns>uniform grid</returns>
+        private UniformGrid GetControlButtonsGrid()
+        {
+            var backgroundColor = new Color(0, 128, 255);
+            Color textColor = Color.White;
+
+            var lookButton = new Button
+            {
+                Content = "Look",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = 32,
+            };
+            lookButton.Clicked += (s, o) => this.viewModel.Action(IngameViewModel.ActionType.Look);
+
+            var getButton = new Button
+            {
+                Content = "Get",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = 32,
+            };
+            getButton.Clicked += (s, o) => this.viewModel.Action(IngameViewModel.ActionType.Get);
+
+            var useButton = new Button
+            {
+                Content = "Use",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = 32,
+            };
+            useButton.Clicked += (s, o) => this.viewModel.Action(IngameViewModel.ActionType.Use);
+
+            var attackButton = new Button
+            {
+                Content = "Attack",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = 32,
+            };
+            attackButton.Clicked += (s, o) => this.viewModel.Action(IngameViewModel.ActionType.Attack);
+
+            var talkButton = new Button
+            {
+                Content = "Talk",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = 32,
+            };
+            talkButton.Clicked += (s, o) => this.viewModel.Action(IngameViewModel.ActionType.Talk);
+
+            var optionsButton = new Button
+            {
+                Content = "Options",
+                BackgroundColor = backgroundColor,
+                TextColor = textColor,
+                Width = 50,
+            };
+            optionsButton.Clicked += (s, o) => this.viewModel.Action(IngameViewModel.ActionType.Options);
+
+            return new UniformGrid
+            {
+                Height = 80,
+                Width = 320,
+                BorderThickness = 0,
+                Columns = 3,
+                Rows = 2,
+                Items =
+                {
+                    lookButton,
+                    getButton,
+                    useButton,
+                    attackButton,
+                    talkButton,
+                    optionsButton
+                }
+            };
         }
 
         /// <summary>
