@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Game.Core.ViewModels
@@ -13,6 +14,11 @@ namespace Game.Core.ViewModels
     /// </summary>
     internal class MessageScrollViewModel
     {
+        /// <summary>
+        /// Color modifier character
+        /// </summary>
+        private const char ColorModifierChar = '~';
+
         /// <summary>
         /// All scroll lines
         /// </summary>
@@ -119,17 +125,19 @@ namespace Game.Core.ViewModels
         public void AddText(string text)
         {
             string remainingText = text;
+            string currentColorText = string.Empty;
 
             while (remainingText.Any())
             {
-                if (remainingText.Length < numLineChars)
+                int remainingTextLength = remainingText.Length - 2 * text.Count(ch => ch == ColorModifierChar);
+                if (remainingTextLength < this.numLineChars)
                 {
                     this.scrollLines.Add(remainingText);
                     break;
                 }
 
                 // find next break from the end of the maximum line length
-                int nextBreakPos = remainingText.LastIndexOf(' ', numLineChars);
+                int nextBreakPos = FindNextBreakPos(remainingText, ref currentColorText);
                 if (nextBreakPos == -1)
                 {
                     // there's no remaining break; just split the word at the end of the line
@@ -137,10 +145,57 @@ namespace Game.Core.ViewModels
                 }
 
                 this.scrollLines.Add(remainingText.Substring(0, nextBreakPos));
-                remainingText = remainingText.Substring(nextBreakPos).TrimStart();
+                remainingText = currentColorText + remainingText.Substring(nextBreakPos).TrimStart();
             }
 
             this.ScrollToEnd();
+        }
+
+        /// <summary>
+        /// Finds the next break position, by checking the text for space characters and returning
+        /// the last one. Color modifier chars are skipped in the search.
+        /// </summary>
+        /// <param name="text">text to check for the next break position</param>
+        /// <param name="currentColorText">updated current color text</param>
+        /// <returns>next break position, or -1 when none was found</returns>
+        private int FindNextBreakPos(string text, ref string currentColorText)
+        {
+            if (!text.Contains(ColorModifierChar))
+            {
+                return text.LastIndexOf(' ', numLineChars);
+            }
+
+            int breakPos = -1;
+            int offset = 0;
+            for (int index = 0; index < text.Length && index <= this.numLineChars + offset; index++)
+            {
+                char ch = text[index];
+                if (ch == ' ')
+                {
+                    breakPos = index;
+                }
+                else if (ch == ColorModifierChar)
+                {
+                    Debug.Assert(
+                        index + 1 < text.Length,
+                        "after the ~ the color character must follow");
+
+                    if (index + 1 < text.Length)
+                    {
+                        currentColorText = text.Substring(index, 2);
+
+                        if (currentColorText.ToLowerInvariant() == "~f")
+                        {
+                            currentColorText = string.Empty;
+                        }
+
+                        // from now on, the line can be 2 chars longer than before
+                        offset += 2;
+                    }
+                }
+            }
+
+            return breakPos;
         }
     }
 }

@@ -22,6 +22,29 @@ namespace Game.Core.Views
         private const char ColorModifierChar = '~';
 
         /// <summary>
+        /// Colors that can be selected with the color modifier character.
+        /// </summary>
+        private static readonly List<Color> ColorByIndex = new List<Color>
+        {
+            Color.Black,    // ~0
+            Color.Blue,     // ~1
+            Color.Green,    // ~2
+            Color.Cyan,     // ~3
+            Color.Red,      // ~4
+            Color.Magenta,  // ~5
+            Color.Brown,    // ~6
+            Color.LightGray,// ~7
+            Color.DarkGray, // ~8
+            Color.LightBlue,// ~9
+            Color.LightGreen, // ~a
+            Color.LightCyan,// ~b
+            Color.Orange,   // ~c
+            Color.Pink,     // ~d
+            Color.Yellow,   // ~e
+            Color.White,    // ~f
+        };
+
+        /// <summary>
         /// Enumerable of all message scroll lines to display; this property may also be set using
         /// a Binding object.
         /// </summary>
@@ -126,13 +149,59 @@ namespace Game.Core.Views
         /// <summary>
         /// Draws colored text line
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="renderer"></param>
-        /// <param name="line"></param>
-        /// <param name="lineIndex"></param>
+        /// <param name="context">gui context</param>
+        /// <param name="renderer">gui renderer</param>
+        /// <param name="line">scroll line to draw</param>
+        /// <param name="lineIndex">current line index</param>
         private void DrawColoredText(IGuiContext context, IGuiRenderer renderer, string line, int lineIndex)
         {
-            // TODO implement
+            string remainingLine = line;
+
+            var currentDrawPos = new Vector2(this.ContentRectangle.X, this.ContentRectangle.Y + lineIndex * 16.0f);
+
+            var currentColor = this.TextColor;
+
+            while (remainingLine.Any())
+            {
+                int colorModifierPos = remainingLine.IndexOf(ColorModifierChar);
+
+                string linePart = colorModifierPos == -1
+                    ? remainingLine
+                    : remainingLine.Substring(0, colorModifierPos);
+
+                if (linePart.Any())
+                {
+                    renderer.DrawText(
+                        context.DefaultFont,
+                        linePart,
+                        currentDrawPos,
+                        currentColor);
+
+                    currentDrawPos.X += (linePart.Length - 1) * 16.0f;
+                }
+
+                if (colorModifierPos != -1)
+                {
+                    Debug.Assert(
+                        colorModifierPos + 1 < remainingLine.Length,
+                        "after the ~ the color character must follow");
+
+                    char colorChar = char.ToLowerInvariant(remainingLine[colorModifierPos + 1]);
+                    int colorIndex = colorChar >= '0' && colorChar <= '9' ? colorChar - '0' : colorChar - 'a' + 10;
+
+                    Debug.WriteLine(
+                        colorIndex < ColorByIndex.Count,
+                        "invalid color modifier character");
+
+                    if (colorIndex < ColorByIndex.Count)
+                    {
+                        currentColor = ColorByIndex[colorIndex];
+                    }
+                }
+
+                int charsToSkip = linePart.Length + (colorModifierPos != -1 ? 2 : 0);
+                remainingLine = remainingLine.Substring(charsToSkip);
+            }
         }
     }
 }
