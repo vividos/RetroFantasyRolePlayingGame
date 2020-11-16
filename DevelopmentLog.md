@@ -1,5 +1,20 @@
 ﻿# Development Log
 
+## 2020-11-15 Day 7: Message scroll
+
+The message scroll is a central element in the user interface, since it shows
+responses to actions that the user takes, and possibly any other textual info
+the player needs. The message scroll should break text on word breaks and
+support colored words.
+
+Coding this was easier than I thought. I split the logic of handling all the
+message scroll text breaking and coloring to a new view model class. The view
+class just renders the text that comes from the view model. A color modifier
+character (~) can be used to switch colors in the middle of a sentence. The
+handling of finding word breaks and length of strings got a little more
+complicated, though. And the best thing is, the message scroll can be reused
+when doing a conversation dialog.
+
 ## 2020-11-06 Day 6: Initial in-game screen layout
 
 Today I tried out how the in-game screen could look. Various RPGs from the
