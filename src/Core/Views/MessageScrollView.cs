@@ -189,7 +189,7 @@ namespace Game.Core.Views
                     char colorChar = char.ToLowerInvariant(remainingLine[colorModifierPos + 1]);
                     int colorIndex = colorChar >= '0' && colorChar <= '9' ? colorChar - '0' : colorChar - 'a' + 10;
 
-                    Debug.WriteLine(
+                    Debug.Assert(
                         colorIndex < ColorByIndex.Count,
                         "invalid color modifier character");
 
