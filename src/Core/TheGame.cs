@@ -93,8 +93,8 @@ namespace Game.Core
         {
             this.IsTouchDevice = isTouchEnabledDevice;
 
-            this.ScreenWidth = isMobileDevice ? VirtualHeight : VirtualWidth;
-            this.ScreenHeight = isMobileDevice ? VirtualWidth : VirtualHeight;
+            this.ScreenWidth = VirtualWidth;
+            this.ScreenHeight = VirtualHeight;
 
             this.graphics = new GraphicsDeviceManager(this)
             {
@@ -110,8 +110,6 @@ namespace Game.Core
 
             this.IsMouseVisible = !isMobileDevice;
 
-            TouchPanel.DisplayHeight = this.ScreenHeight;
-            TouchPanel.DisplayWidth = this.ScreenWidth;
             TouchPanel.EnableMouseTouchPoint = true;
 
             this.screenManager = this.Components.Add<ScreenManager>();
@@ -162,7 +160,11 @@ namespace Game.Core
         /// </summary>
         private void SetupUserInterface()
         {
-            var viewportAdapter = new DefaultViewportAdapter(this.GraphicsDevice);
+            var viewportAdapter = new BoxingViewportAdapter(
+                this.Window,
+                this.GraphicsDevice,
+                this.ScreenWidth,
+                this.ScreenHeight);
             var guiRenderer = new GuiSpriteBatchRenderer(this.GraphicsDevice, () => Matrix.Identity);
 
             var guiFont = Content.Load<BitmapFont>("fonts/PixelAzureBondsBitmap24");
@@ -246,14 +248,17 @@ namespace Game.Core
         }
 
         /// <summary>
-        /// This is called when the game should draw itself.
+        /// This is called when the game should draw itself. This uses a RenderTarget2D object;
+        /// see this link for more:
+        /// http://www.infinitespace-studios.co.uk/general/monogame-scaling-your-game-using-rendertargets-and-touchpanel/
+        /// Note that the suggestion setting TouchPanel properties doesn't work.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.SetRenderTarget(this.renderTarget);
+            this.GraphicsDevice.SetRenderTarget(this.renderTarget);
 
-            GraphicsDevice.Clear(Color.Black);
+            this.GraphicsDevice.Clear(Color.Black);
 
             // draw currently active screen
             base.Draw(gameTime);
@@ -263,15 +268,15 @@ namespace Game.Core
                 this.guiSystem.Draw(gameTime);
             }
 
-            Rectangle dst = this.CalcDrawRectangle();
-
-            GraphicsDevice.SetRenderTarget(null);
+            this.GraphicsDevice.SetRenderTarget(null);
 
             // draw render target
-            GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
+            Rectangle destinationRectangle = this.CalcDrawRectangle();
+
+            this.GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1.0f, 0);
 
             this.targetBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
-            this.targetBatch.Draw(this.renderTarget, dst, Color.White);
+            this.targetBatch.Draw(this.renderTarget, destinationRectangle, Color.White);
             this.targetBatch.End();
         }
 
@@ -281,29 +286,32 @@ namespace Game.Core
         /// <returns>draw rectangle</returns>
         private Rectangle CalcDrawRectangle()
         {
-            float outputAspect = Window.ClientBounds.Width / (float)Window.ClientBounds.Height;
+            int windowWidth = this.Window.ClientBounds.Width;
+            int windowHeight = this.Window.ClientBounds.Height;
+
+            float outputAspect = windowWidth / (float)windowHeight;
             float preferredAspect = this.ScreenWidth / (float)this.ScreenHeight;
 
-            Rectangle dst;
+            Rectangle destinationRectangle;
 
             if (outputAspect <= preferredAspect)
             {
                 // output is taller than it is wider, bars on top/bottom
-                int presentHeight = (int)((Window.ClientBounds.Width / preferredAspect) + 0.5f);
-                int barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
+                int presentHeight = (int)(windowWidth / preferredAspect + 0.5f);
+                int barHeight = (windowHeight - presentHeight) / 2;
 
-                dst = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
+                destinationRectangle = new Rectangle(0, barHeight, windowWidth, presentHeight);
             }
             else
             {
                 // output is wider than it is tall, bars left/right
-                int presentWidth = (int)((Window.ClientBounds.Height * preferredAspect) + 0.5f);
-                int barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
+                int presentWidth = (int)(windowHeight * preferredAspect + 0.5f);
+                int barWidth = (windowWidth - presentWidth) / 2;
 
-                dst = new Rectangle(barWidth, 0, presentWidth, Window.ClientBounds.Height);
+                destinationRectangle = new Rectangle(barWidth, 0, presentWidth, windowHeight);
             }
 
-            return dst;
+            return destinationRectangle;
         }
 
         /// <summary>
