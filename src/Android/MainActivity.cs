@@ -29,8 +29,10 @@ namespace Game.Android
         {
             base.OnCreate(bundle);
 
-            var game = new TheGame(isTouchEnabledDevice: true, isMobileDevice: true);
-            game.SavegameFolder = this.FilesDir.AbsolutePath;
+            var game = new TheGame(isTouchEnabledDevice: true, isMobileDevice: true)
+            {
+                SavegameFolder = this.FilesDir.AbsolutePath
+            };
 
             var view = game.Services.GetService(typeof(View)) as View;
 

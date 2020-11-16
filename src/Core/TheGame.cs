@@ -123,10 +123,10 @@ namespace Game.Core
         /// </summary>
         protected override void Initialize()
         {
-            Window.Title = GameData.GameName;
+            this.Window.Title = GameData.GameName;
             if (!string.IsNullOrEmpty(GameData.GameSubtitle))
             {
-                Window.Title += ": " + GameData.GameSubtitle;
+                this.Window.Title += ": " + GameData.GameSubtitle;
             }
 
             this.renderTarget = new RenderTarget2D(
@@ -167,7 +167,7 @@ namespace Game.Core
                 this.ScreenHeight);
             var guiRenderer = new GuiSpriteBatchRenderer(this.GraphicsDevice, () => Matrix.Identity);
 
-            var guiFont = Content.Load<BitmapFont>("fonts/PixelAzureBondsBitmap24");
+            BitmapFont guiFont = this.Content.Load<BitmapFont>("fonts/PixelAzureBondsBitmap24");
             BitmapFont.UseKernings = false;
             Skin.CreateDefault(guiFont);
 
@@ -211,7 +211,7 @@ namespace Game.Core
         /// <param name="type">game screen type</param>
         public void NavigateToScreen(GameScreenType type)
         {
-            var transition = new MonoGame.Extended.Screens.Transitions.FadeTransition(GraphicsDevice, Color.Black, 0.5f);
+            var transition = new MonoGame.Extended.Screens.Transitions.FadeTransition(this.GraphicsDevice, Color.Black, 0.5f);
 
             switch (type)
             {
@@ -329,7 +329,7 @@ namespace Game.Core
                     Directory.CreateDirectory(this.SavegameFolder);
                 }
 
-                var savegameFilename = Path.Combine(this.SavegameFolder, GameData.SavegameFilename);
+                string savegameFilename = Path.Combine(this.SavegameFolder, GameData.SavegameFilename);
 
                 using (var stream = new FileStream(savegameFilename, FileMode.Create))
                 {

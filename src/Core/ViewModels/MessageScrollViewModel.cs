@@ -42,15 +42,10 @@ namespace Game.Core.ViewModels
         /// <summary>
         /// Returns all currently visible lines
         /// </summary>
-        public IEnumerable<string> VisibleLines
-        {
-            get
-            {
-                return this.scrollLines.GetRange(
-                    this.currentScrollIndex,
-                    Math.Min(scrollLines.Count - this.currentScrollIndex, this.numVisibleLines));
-            }
-        }
+        public IEnumerable<string> VisibleLines =>
+            this.scrollLines.GetRange(
+                this.currentScrollIndex,
+                Math.Min(this.scrollLines.Count - this.currentScrollIndex, this.numVisibleLines));
 
         /// <summary>
         /// Indicates if scroll is at start of all scroll lines
@@ -60,13 +55,7 @@ namespace Game.Core.ViewModels
         /// <summary>
         /// Indicates if scroll is at end of all scroll lines
         /// </summary>
-        public bool IsAtScrollEnd
-        {
-            get
-            {
-                return scrollLines.Count - this.currentScrollIndex <= this.numVisibleLines;
-            }
-        }
+        public bool IsAtScrollEnd => this.scrollLines.Count - this.currentScrollIndex <= this.numVisibleLines;
 
         /// <summary>
         /// Creates a new view model for the message scroll view
@@ -137,11 +126,11 @@ namespace Game.Core.ViewModels
                 }
 
                 // find next break from the end of the maximum line length
-                int nextBreakPos = FindNextBreakPos(remainingText, ref currentColorText);
+                int nextBreakPos = this.FindNextBreakPos(remainingText, ref currentColorText);
                 if (nextBreakPos == -1)
                 {
                     // there's no remaining break; just split the word at the end of the line
-                    nextBreakPos = numLineChars;
+                    nextBreakPos = this.numLineChars;
                 }
 
                 this.scrollLines.Add(remainingText.Substring(0, nextBreakPos));
@@ -162,7 +151,7 @@ namespace Game.Core.ViewModels
         {
             if (!text.Contains(ColorModifierChar))
             {
-                return text.LastIndexOf(' ', numLineChars);
+                return text.LastIndexOf(' ', this.numLineChars);
             }
 
             int breakPos = -1;

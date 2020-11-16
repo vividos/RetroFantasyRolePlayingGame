@@ -150,8 +150,8 @@ namespace Game.Core.Views
         /// </summary>
         public override void LoadContent()
         {
-            this.gameTitleFont = Content.Load<SpriteFont>("fonts/BlackCastleMF48");
-            this.gameSubtitleFont = Content.Load<SpriteFont>("fonts/PixelAzureBonds24");
+            this.gameTitleFont = this.Content.Load<SpriteFont>("fonts/BlackCastleMF48");
+            this.gameSubtitleFont = this.Content.Load<SpriteFont>("fonts/PixelAzureBonds24");
         }
 
         /// <summary>

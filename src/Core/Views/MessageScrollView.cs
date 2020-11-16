@@ -85,7 +85,7 @@ namespace Game.Core.Views
         {
             base.Draw(context, renderer, deltaSeconds);
 
-            renderer.FillRectangle(this.ContentRectangle, BackgroundColor);
+            renderer.FillRectangle(this.ContentRectangle, this.BackgroundColor);
 
             IEnumerable<string> scrollLines = this.GetScrollLines();
             this.DrawTextLines(context, renderer, scrollLines);
@@ -98,7 +98,7 @@ namespace Game.Core.Views
         /// <returns>enumerable of message scroll lines</returns>
         private IEnumerable<string> GetScrollLines()
         {
-            var scrollLinesBindings = this.Bindings.Find(binding => binding.ViewProperty == nameof(this.MessageScrollLines));
+            Binding scrollLinesBindings = this.Bindings.Find(binding => binding.ViewProperty == nameof(this.MessageScrollLines));
             if (scrollLinesBindings == null)
             {
                 return this.MessageScrollLines;
@@ -127,7 +127,7 @@ namespace Game.Core.Views
             int lineIndex = 0;
             foreach (string line in scrollLines)
             {
-                var currentColor = this.TextColor;
+                Color currentColor = this.TextColor;
 
                 if (!line.Contains(ColorModifierChar))
                 {
@@ -159,7 +159,7 @@ namespace Game.Core.Views
 
             var currentDrawPos = new Vector2(this.ContentRectangle.X, this.ContentRectangle.Y + lineIndex * 16.0f);
 
-            var currentColor = this.TextColor;
+            Color currentColor = this.TextColor;
 
             while (remainingLine.Any())
             {
