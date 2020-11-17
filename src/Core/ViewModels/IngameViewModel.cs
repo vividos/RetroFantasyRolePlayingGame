@@ -6,6 +6,11 @@
     internal class IngameViewModel
     {
         /// <summary>
+        /// View model for the map view
+        /// </summary>
+        public MapViewViewModel MapViewViewModel { get; }
+
+        /// <summary>
         /// View model for the message scroll
         /// </summary>
         public MessageScrollViewModel MessageScrollViewModel { get; }
@@ -72,8 +77,10 @@
         /// <summary>
         /// Creates a new view model object for the in-game screen
         /// </summary>
-        public IngameViewModel()
+        /// <param name="game">game instance</param>
+        public IngameViewModel(TheGame game)
         {
+            this.MapViewViewModel = new MapViewViewModel(game);
             this.MessageScrollViewModel = new MessageScrollViewModel(11, 20);
         }
 
