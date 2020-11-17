@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Game.Core.Models
@@ -23,6 +24,51 @@ namespace Game.Core.Models
         /// </summary>
         public static string SavegameFilename { get; } = "retro-fantasy-test-of-data.json";
 
+        #region Static game data
+
+        /// <summary>
+        /// Dictionary of map IDs and all maps in the game
+        /// </summary>
+        public static Dictionary<string, Map> AllMaps { get; } = new Dictionary<string, Map>()
+        {
+            {
+                "wilderness",
+                new Map
+                {
+                    Id = "wilderness",
+                    Name = "The Wilderness",
+                    TiledMapFilename = "tilemaps/wilderness.tmx",
+                    EdgeType = Map.MapEdgeType.WrapAround,
+                }
+            },
+            {
+                "bobs-hut",
+                new Map
+                {
+                    Id = "bobs-hut",
+                    Name = "Bob's Hut",
+                    TiledMapFilename = "tilemaps/bobs-hut.tmx",
+                    EdgeType = Map.MapEdgeType.ExitMap,
+                }
+            },
+        };
+
+        #endregion
+
+        #region Dynamic game data
+
+        /// <summary>
+        /// Map ID of currently loaded map
+        /// </summary>
+        public string CurrentMapId { get; set; }
+
+        /// <summary>
+        /// The player's (or party's) position on the current map
+        /// </summary>
+        public MapPosition PlayerPosition { get; set; }
+
+        #endregion
+
         /// <summary>
         /// Creates a new game data instance
         /// </summary>
@@ -31,6 +77,8 @@ namespace Game.Core.Models
         {
             return new GameData
             {
+                CurrentMapId = "wilderness",
+                PlayerPosition = new MapPosition(5, 5),
             };
         }
 
