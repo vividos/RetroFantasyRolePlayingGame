@@ -36,7 +36,7 @@ namespace Game.Core.Views
         public MapView(MapViewViewModel viewModel)
         {
             this.viewModel = viewModel;
-            this.sizeInTiles = new Point(13, 13);
+            this.sizeInTiles = new Point(11, 11);
         }
 
         /// <summary>

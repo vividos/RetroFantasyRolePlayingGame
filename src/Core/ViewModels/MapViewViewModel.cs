@@ -93,7 +93,7 @@ namespace Game.Core.ViewModels
             string tiledMapFilename = this.currentMap.TiledMapFilename.Replace(".tmx", string.Empty);
             this.TileMap = this.contentManager.Load<TiledMap>(tiledMapFilename);
 
-            this.mapVisibility = new MapVisibility(this.GetTileInfo, 6);
+            this.mapVisibility = new MapVisibility(this.GetTileInfo, 5);
         }
 
         /// <summary>
