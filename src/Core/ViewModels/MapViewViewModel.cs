@@ -1,4 +1,5 @@
-﻿using Game.Core.Models;
+﻿using Game.Core.Logic;
+using Game.Core.Models;
 using Microsoft.Xna.Framework.Content;
 using MonoGame.Extended.Tiled;
 using System.Linq;
@@ -29,6 +30,11 @@ namespace Game.Core.ViewModels
         private Map currentMap;
 
         /// <summary>
+        /// Map visibility checking logic
+        /// </summary>
+        private MapVisibility mapVisibility;
+
+        /// <summary>
         /// Tiled tilemap to use for drawing
         /// </summary>
         public TiledMap TileMap { get; internal set; }
@@ -40,7 +46,11 @@ namespace Game.Core.ViewModels
         /// <returns>true when visible, false when not</returns>
         public bool IsTileVisible(MapPosition position)
         {
-            // TODO implement
+            if (this.currentMap.UseVisibilityCheck)
+            {
+                return this.mapVisibility.IsVisible(position);
+            }
+
             return true;
         }
 
@@ -67,6 +77,8 @@ namespace Game.Core.ViewModels
             this.contentManager = game.Content;
 
             this.UpdateTilemap();
+
+            this.mapVisibility.Update(this.currentGameData.PlayerPosition);
         }
 
         /// <summary>
@@ -80,6 +92,8 @@ namespace Game.Core.ViewModels
 
             string tiledMapFilename = this.currentMap.TiledMapFilename.Replace(".tmx", string.Empty);
             this.TileMap = this.contentManager.Load<TiledMap>(tiledMapFilename);
+
+            this.mapVisibility = new MapVisibility(this.GetTileInfo, 6);
         }
 
         /// <summary>

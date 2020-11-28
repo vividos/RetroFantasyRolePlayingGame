@@ -45,5 +45,11 @@
         /// Map edge type for this map
         /// </summary>
         public MapEdgeType EdgeType { get; set; } = MapEdgeType.Block;
+
+        /// <summary>
+        /// Indicates if visibility is checked for the given map and non-visible tiles are not
+        /// rendered.
+        /// </summary>
+        public bool UseVisibilityCheck { get; set; } = true;
     }
 }
