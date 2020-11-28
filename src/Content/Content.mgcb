@@ -45,6 +45,11 @@
 /processorParam:TextureFormat=Color
 /build:fonts/PixelAzureBondsBitmap24Texture.png
 
+#begin tilemaps/bobs-hut.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:tilemaps/bobs-hut.tmx
+
 #begin tilemaps/objects.tsx
 /importer:TiledMapTilesetImporter
 /processor:TiledMapTilesetProcessor
@@ -61,4 +66,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:tilemaps/ultima4-tiles-vga.png
+
+#begin tilemaps/wilderness.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:tilemaps/wilderness.tmx
 

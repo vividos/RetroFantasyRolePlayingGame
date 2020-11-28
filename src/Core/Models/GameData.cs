@@ -39,6 +39,7 @@ namespace Game.Core.Models
                     Name = "The Wilderness",
                     TiledMapFilename = "tilemaps/wilderness.tmx",
                     EdgeType = Map.MapEdgeType.WrapAround,
+                    UseVisibilityCheck = true,
                 }
             },
             {
@@ -49,6 +50,7 @@ namespace Game.Core.Models
                     Name = "Bob's Hut",
                     TiledMapFilename = "tilemaps/bobs-hut.tmx",
                     EdgeType = Map.MapEdgeType.ExitMap,
+                    UseVisibilityCheck = true,
                 }
             },
         };
@@ -78,7 +80,7 @@ namespace Game.Core.Models
             return new GameData
             {
                 CurrentMapId = "wilderness",
-                PlayerPosition = new MapPosition(5, 5),
+                PlayerPosition = new MapPosition(35, 33),
             };
         }
 
