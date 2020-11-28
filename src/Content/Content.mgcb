@@ -45,6 +45,11 @@
 /processorParam:TextureFormat=Color
 /build:fonts/PixelAzureBondsBitmap24Texture.png
 
+#begin tilemaps/objects.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:tilemaps/objects.tsx
+
 #begin tilemaps/ultima4-tiles-vga.png
 /importer:TextureImporter
 /processor:TextureProcessor
