@@ -39,6 +39,7 @@ namespace Game.Core.Views
                 Width = 480,
                 Height = 480,
                 BorderThickness = 0,
+                BackgroundColor = Color.Black,
             };
 
             var partyListView = new Box
