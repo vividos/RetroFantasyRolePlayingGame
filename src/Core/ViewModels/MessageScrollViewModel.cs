@@ -118,7 +118,7 @@ namespace Game.Core.ViewModels
 
             while (remainingText.Any())
             {
-                int remainingTextLength = remainingText.Length - 2 * text.Count(ch => ch == ColorModifierChar);
+                int remainingTextLength = remainingText.Length - (2 * text.Count(ch => ch == ColorModifierChar));
                 if (remainingTextLength < this.numLineChars)
                 {
                     this.scrollLines.Add(remainingText);

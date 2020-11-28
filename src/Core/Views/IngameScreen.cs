@@ -56,9 +56,10 @@ namespace Game.Core.Views
             };
 
             messageScrollView.Bindings.Add(
-                new Binding(this.viewModel.MessageScrollViewModel,
-                nameof(MessageScrollViewModel.VisibleLines),
-                nameof(MessageScrollView.MessageScrollLines)));
+                new Binding(
+                    this.viewModel.MessageScrollViewModel,
+                    nameof(MessageScrollViewModel.VisibleLines),
+                    nameof(MessageScrollView.MessageScrollLines)));
 
             UniformGrid controlButtonsGrid = this.GetControlButtonsGrid();
 

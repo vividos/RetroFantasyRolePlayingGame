@@ -33,11 +33,11 @@ namespace Game.Core.Views
             Color.Red,      // ~4
             Color.Magenta,  // ~5
             Color.Brown,    // ~6
-            Color.LightGray,// ~7
+            Color.LightGray, // ~7
             Color.DarkGray, // ~8
-            Color.LightBlue,// ~9
+            Color.LightBlue, // ~9
             Color.LightGreen, // ~a
-            Color.LightCyan,// ~b
+            Color.LightCyan, // ~b
             Color.Orange,   // ~c
             Color.Pink,     // ~d
             Color.Yellow,   // ~e
@@ -134,7 +134,7 @@ namespace Game.Core.Views
                     renderer.DrawText(
                         context.DefaultFont,
                         line,
-                        new Vector2(this.ContentRectangle.X, this.ContentRectangle.Y + lineIndex * 16.0f),
+                        new Vector2(this.ContentRectangle.X, this.ContentRectangle.Y + (lineIndex * 16.0f)),
                         currentColor);
                 }
                 else
@@ -157,7 +157,7 @@ namespace Game.Core.Views
         {
             string remainingLine = line;
 
-            var currentDrawPos = new Vector2(this.ContentRectangle.X, this.ContentRectangle.Y + lineIndex * 16.0f);
+            var currentDrawPos = new Vector2(this.ContentRectangle.X, this.ContentRectangle.Y + (lineIndex * 16.0f));
 
             Color currentColor = this.TextColor;
 

@@ -297,7 +297,7 @@ namespace Game.Core
             if (outputAspect <= preferredAspect)
             {
                 // output is taller than it is wider, bars on top/bottom
-                int presentHeight = (int)(windowWidth / preferredAspect + 0.5f);
+                int presentHeight = (int)((windowWidth / preferredAspect) + 0.5f);
                 int barHeight = (windowHeight - presentHeight) / 2;
 
                 destinationRectangle = new Rectangle(0, barHeight, windowWidth, presentHeight);
@@ -305,7 +305,7 @@ namespace Game.Core
             else
             {
                 // output is wider than it is tall, bars left/right
-                int presentWidth = (int)(windowHeight * preferredAspect + 0.5f);
+                int presentWidth = (int)((windowHeight * preferredAspect) + 0.5f);
                 int barWidth = (windowWidth - presentWidth) / 2;
 
                 destinationRectangle = new Rectangle(barWidth, 0, presentWidth, windowHeight);
