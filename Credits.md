@@ -1,5 +1,7 @@
 # Credits
 
+The game uses several libraries, tools and assets.
+
 ## Libraries
 
 The game uses the [MonoGame](https://www.monogame.net/) libraries to implement
@@ -9,6 +11,11 @@ the game. The library is licensed under the
 The game uses the [MonoGame.Extended](https://github.com/craftworkgames/MonoGame.Extended)
 libraries to implement the game. The library is licensed under the
 [MIT License](https://github.com/craftworkgames/MonoGame.Extended/blob/develop/LICENSE).
+
+## Tools
+
+The game uses the Tiled map editor to create the tilemaps. The tool can be found here:
+[https://www.mapeditor.org/](https://www.mapeditor.org/).
 
 ## Assets
 
