@@ -34,12 +34,11 @@ namespace Game.Core.Views
         /// <param name="game">game instance</param>
         private void InitUserInterface(TheGame game)
         {
-            var mapView = new Box
+            var mapView = new MapView(this.viewModel.MapViewViewModel)
             {
                 Width = 480,
                 Height = 480,
                 BorderThickness = 0,
-                FillColor = Color.LightBlue,
             };
 
             var partyListView = new Box
