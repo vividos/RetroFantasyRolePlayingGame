@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using MonoGame.Extended.Gui;
 using MonoGame.Extended.Gui.Controls;
+using MonoGame.Extended.Tiled;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -97,13 +98,26 @@ namespace Game.Core.Views
         /// <summary>
         /// Draws single tile
         /// </summary>
-        /// <param name="tileIndex">tile with given index into tileset</param>
+        /// <param name="tileIndex">tile with given index into tilemap tileset</param>
         /// <param name="screenX">screen X coordinates of upper left corner of tile</param>
         /// <param name="screenY">screen Y coordinates of upper left corner of tile</param>
         private void DrawTile(IGuiRenderer renderer, int tileIndex, int screenX, int screenY)
         {
-            MonoGame.Extended.Tiled.TiledMapTileset tileset = this.viewModel.TileMap.Tilesets.First();
+            TiledMapTileset tileset = this.viewModel.TileMap.Tilesets.First();
 
+            this.DrawTilesetTile(renderer, tileset, tileIndex, screenX, screenY);
+        }
+
+        /// <summary>
+        /// Draws a single tile of given tileset and tileset index
+        /// </summary>
+        /// <param name="renderer">gui renderer</param>
+        /// <param name="tileset">tileset to use</param>
+        /// <param name="tileIndex">tile with given index into tileset</param>
+        /// <param name="screenX">screen X coordinates of upper left corner of tile</param>
+        /// <param name="screenY">screen Y coordinates of upper left corner of tile</param>
+        private void DrawTilesetTile(IGuiRenderer renderer, TiledMapTileset tileset, int tileIndex, int screenX, int screenY)
+        {
             var tileSize = new Vector2(
                 (float)this.Width / this.sizeInTiles.X,
                 (float)this.Height / this.sizeInTiles.Y);
