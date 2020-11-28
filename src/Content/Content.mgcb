@@ -45,3 +45,15 @@
 /processorParam:TextureFormat=Color
 /build:fonts/PixelAzureBondsBitmap24Texture.png
 
+#begin tilemaps/ultima4-tiles-vga.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tilemaps/ultima4-tiles-vga.png
+

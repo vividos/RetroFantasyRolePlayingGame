@@ -25,3 +25,7 @@ License: [Freeware](https://www.fontspace.com/help#license-3)
 Font "Pixel Azure Bonds", designed by Pixel Sagas:
 https://www.fontspace.com/pixel-azure-bonds-font-f21506
 License: [Freeware](https://www.fontspace.com/help#license-3)
+
+Ultima 4 Upgrade VGA tileset:
+http://www.moongates.com/u4/upgrade/Upgrade.htm
+The tileset is licensed as-is from Wiltshire Dragon (Joshua Steele)
