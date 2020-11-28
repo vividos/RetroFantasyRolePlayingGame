@@ -200,7 +200,7 @@ namespace Game.Core.Views
         /// </summary>
         public override void LoadContent()
         {
-            // TODO implement
+            // nothing to do
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Game.Core.Views
         /// <param name="gameTime">game time; unused</param>
         public override void Draw(GameTime gameTime)
         {
-            // TODO implement
+            // nothing to do
         }
     }
 }
