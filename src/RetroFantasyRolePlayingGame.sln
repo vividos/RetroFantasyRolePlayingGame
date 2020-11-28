@@ -19,6 +19,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Game.Core", "Core\Game.Core.csproj", "{9362BF8E-BC51-44B4-BCA4-D385257349EB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Content", "Content", "{A17D819B-58BB-4976-A89C-B96F40EE4932}"
+	ProjectSection(SolutionItems) = preProject
+		Content\Content.mgcb = Content\Content.mgcb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tilemaps", "tilemaps", "{E8F5B9B9-EB81-49DB-8857-5E55AC716FF5}"
+	ProjectSection(SolutionItems) = preProject
+		Content\tilemaps\bobs-hut.tmx = Content\tilemaps\bobs-hut.tmx
+		Content\tilemaps\objects.png = Content\tilemaps\objects.png
+		Content\tilemaps\objects.tsx = Content\tilemaps\objects.tsx
+		Content\tilemaps\ultima4-tiles-vga.png = Content\tilemaps\ultima4-tiles-vga.png
+		Content\tilemaps\ultima4-tileset.tsx = Content\tilemaps\ultima4-tileset.tsx
+		Content\tilemaps\wilderness.tmx = Content\tilemaps\wilderness.tmx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fonts", "fonts", "{B078FB54-1572-4D2E-BF6D-461D7D732449}"
+	ProjectSection(SolutionItems) = preProject
+		Content\fonts\BlackcastleMF.ttf = Content\fonts\BlackcastleMF.ttf
+		Content\fonts\BlackcastleMF48.spritefont = Content\fonts\BlackcastleMF48.spritefont
+		Content\fonts\PixelAzureBonds.ttf = Content\fonts\PixelAzureBonds.ttf
+		Content\fonts\PixelAzureBonds24.spritefont = Content\fonts\PixelAzureBonds24.spritefont
+		Content\fonts\PixelAzureBondsBitmap24.fnt = Content\fonts\PixelAzureBondsBitmap24.fnt
+		Content\fonts\PixelAzureBondsBitmap24Texture.png = Content\fonts\PixelAzureBondsBitmap24Texture.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +67,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E8F5B9B9-EB81-49DB-8857-5E55AC716FF5} = {A17D819B-58BB-4976-A89C-B96F40EE4932}
+		{B078FB54-1572-4D2E-BF6D-461D7D732449} = {A17D819B-58BB-4976-A89C-B96F40EE4932}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1DD6C71-43F4-4D86-B349-F24835E34BAD}
