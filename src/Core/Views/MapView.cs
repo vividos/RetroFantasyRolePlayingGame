@@ -63,6 +63,8 @@ namespace Game.Core.Views
             renderer.FillRectangle(this.ContentRectangle, this.BackgroundColor);
 
             this.DrawMapTiles(renderer);
+
+            this.DrawPlayer(renderer);
         }
 
         /// <summary>
@@ -132,6 +134,22 @@ namespace Game.Core.Views
                 tileset.GetRegion(tileIndex % tileset.Columns, tileIndex / tileset.Columns),
                 destinationRectangle,
                 Color.White);
+        }
+
+        /// <summary>
+        /// Draws player
+        /// </summary>
+        /// <param name="renderer">gui renderer</param>
+        private void DrawPlayer(IGuiRenderer renderer)
+        {
+            int playerX = this.viewModel.PlayerPosition.X - this.viewModel.MapCenterPosition.X + (this.sizeInTiles.X / 2);
+            int playerY = this.viewModel.PlayerPosition.Y - this.viewModel.MapCenterPosition.Y + (this.sizeInTiles.Y / 2);
+
+            if (playerX >= 0 && playerX <= this.sizeInTiles.X &&
+                playerY >= 0 && playerY <= this.sizeInTiles.Y)
+            {
+                this.DrawTilesetTile(renderer, this.viewModel.ObjectTileset, 0, playerX, playerY);
+            }
         }
     }
 }

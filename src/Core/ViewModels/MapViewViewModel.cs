@@ -40,6 +40,11 @@ namespace Game.Core.ViewModels
         public TiledMap TileMap { get; internal set; }
 
         /// <summary>
+        /// Tileset for all objects
+        /// </summary>
+        public TiledMapTileset ObjectTileset { get; internal set; }
+
+        /// <summary>
         /// Returns if tile with given position is currently visible
         /// </summary>
         /// <param name="position">map position</param>
@@ -92,6 +97,8 @@ namespace Game.Core.ViewModels
 
             string tiledMapFilename = this.currentMap.TiledMapFilename.Replace(".tmx", string.Empty);
             this.TileMap = this.contentManager.Load<TiledMap>(tiledMapFilename);
+
+            this.ObjectTileset = this.contentManager.Load<TiledMapTileset>("tilemaps/objects");
 
             this.mapVisibility = new MapVisibility(this.GetTileInfo, 5);
         }
