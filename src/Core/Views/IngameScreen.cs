@@ -1,5 +1,6 @@
 ﻿using Game.Core.ViewModels;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.Gui;
 using MonoGame.Extended.Gui.Controls;
 using MonoGame.Extended.Screens;
@@ -15,6 +16,11 @@ namespace Game.Core.Views
         /// View model for the in-game screen
         /// </summary>
         private readonly IngameViewModel viewModel;
+
+        /// <summary>
+        /// Keyboard state of last Update call
+        /// </summary>
+        private KeyboardState lastKeyboardState;
 
         /// <summary>
         /// Creates a new in-game screen object
@@ -203,7 +209,45 @@ namespace Game.Core.Views
         /// <param name="gameTime">game time; unused</param>
         public override void Update(GameTime gameTime)
         {
-            // TODO implement
+            this.CheckKeyboard();
+        }
+
+        /// <summary>
+        /// Checks keyboard keys and updates view model accordingly.
+        /// </summary>
+        private void CheckKeyboard()
+        {
+            var keyboardState = Keyboard.GetState();
+
+            int moveX = 0;
+            int moveY = 0;
+
+            if (this.lastKeyboardState.IsKeyDown(Keys.Right) && !keyboardState.IsKeyDown(Keys.Right))
+            {
+                moveX = 1;
+            }
+
+            if (this.lastKeyboardState.IsKeyDown(Keys.Left) && !keyboardState.IsKeyDown(Keys.Left))
+            {
+                moveX = -1;
+            }
+
+            if (this.lastKeyboardState.IsKeyDown(Keys.Down) && !keyboardState.IsKeyDown(Keys.Down))
+            {
+                moveY = 1;
+            }
+
+            if (this.lastKeyboardState.IsKeyDown(Keys.Up) && !keyboardState.IsKeyDown(Keys.Up))
+            {
+                moveY = -1;
+            }
+
+            this.lastKeyboardState = keyboardState;
+
+            if (moveX != 0 || moveY != 0)
+            {
+                this.viewModel.MovePlayer(moveX, moveY);
+            }
         }
 
         /// <summary>

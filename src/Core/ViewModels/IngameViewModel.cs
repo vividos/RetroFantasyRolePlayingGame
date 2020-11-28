@@ -1,4 +1,8 @@
-﻿namespace Game.Core.ViewModels
+﻿using Game.Core.Models;
+using System;
+using System.Diagnostics;
+
+namespace Game.Core.ViewModels
 {
     /// <summary>
     /// View model for the ingame screen.
@@ -90,6 +94,21 @@
         /// <param name="actionType">action type</param>
         public void Action(ActionType actionType)
         {
+            // TODO implement
+        }
+
+        /// <summary>
+        /// Moves the player character into the given direction; x and y can only be in the range
+        /// of [-1; +1].
+        /// </summary>
+        /// <param name="x">x direction value</param>
+        /// <param name="y">y direction value</param>
+        public void MovePlayer(int x, int y)
+        {
+            Debug.Assert(
+                Math.Abs(x) <= 1 && Math.Abs(y) <= 1,
+                "must be one of -1, 0 or 1");
+
             // TODO implement
         }
     }
