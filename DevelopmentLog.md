@@ -1,5 +1,34 @@
 ﻿# Development Log
 
+## 2020-11-28 Day 8: Map view
+
+The map view shows all tiles of a tile based map. The Ultima games show a
+11x11 tile grid with the player in the center. In combat screens there are
+fixed maps where the party characters can freely move around. I'd like to
+implement the map the same way.
+
+First, I needed some tiles. Fortunately there are many pre-made tilesets that
+can be used free of charge or with a permissive license. My plan is to later
+draw the tiles by myself, but for implementing and testing the game's basic
+functions, I decided to use the fan-made tileset that is used to enhance the
+original Ultima 4 game. It can be used freely and has many tiles that I need.
+
+Tiles and tile maps can be designed using various tools. In the past I used
+Pyxel to draw tiles, and the Tiled map editor to draw maps that are compatible
+with MonoGame.Extended. These can be loaded using the Content manager, just as
+any other asset.
+
+I also lifted some code for map visibility checking from an older project.
+Some tiles can be marked solid, and the player only sees the tiles that are in
+direct line of sight. Maps then can be marked as using visibility checks or
+not. And I added two maps, a "Wilderness" map with a large island and several
+cities, and a map named "Bob's Hut". The next task will be to implement
+movement and allow the player to change maps.
+
+Now, with map rendering implemented, the game looks like this:
+
+![Ingame screen, version 2](images/ingame-screen-v2.png)
+
 ## 2020-11-15 Day 7: Message scroll
 
 The message scroll is a central element in the user interface, since it shows
