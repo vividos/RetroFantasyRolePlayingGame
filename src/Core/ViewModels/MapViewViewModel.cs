@@ -100,6 +100,14 @@ namespace Game.Core.ViewModels
         }
 
         /// <summary>
+        /// Updates player position on map
+        /// </summary>
+        public void UpdatePlayerPosition()
+        {
+            this.mapVisibility.Update(this.currentGameData.PlayerPosition);
+        }
+
+        /// <summary>
         /// Gets tile info for a specific tile on the map
         /// </summary>
         /// <param name="position">map position of the tile</param>

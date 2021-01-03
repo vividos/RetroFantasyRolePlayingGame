@@ -10,6 +10,11 @@ namespace Game.Core.ViewModels
     internal class IngameViewModel
     {
         /// <summary>
+        /// Current game data
+        /// </summary>
+        private readonly GameData currentGameData;
+
+        /// <summary>
         /// View model for the map view
         /// </summary>
         public MapViewViewModel MapViewViewModel { get; }
@@ -84,6 +89,7 @@ namespace Game.Core.ViewModels
         /// <param name="game">game instance</param>
         public IngameViewModel(TheGame game)
         {
+            this.currentGameData = game.CurrentGameData;
             this.MapViewViewModel = new MapViewViewModel(game);
             this.MessageScrollViewModel = new MessageScrollViewModel(11, 20);
         }
@@ -109,7 +115,25 @@ namespace Game.Core.ViewModels
                 Math.Abs(x) <= 1 && Math.Abs(y) <= 1,
                 "must be one of -1, 0 or 1");
 
-            // TODO implement
+            var newPosition = new MapPosition(
+                this.currentGameData.PlayerPosition.X + x,
+                this.currentGameData.PlayerPosition.Y + y);
+
+            // check new map tile being solid
+            var newTileInfo = this.MapViewViewModel.GetTileInfo(newPosition);
+            if (newTileInfo != null &&
+                newTileInfo.IsSolid)
+            {
+                this.MessageScrollViewModel.AddText("Blocked!");
+                return;
+            }
+
+            // change the position
+            if (!this.currentGameData.PlayerPosition.Equals(newPosition))
+            {
+                this.currentGameData.PlayerPosition = newPosition;
+                this.MapViewViewModel.UpdatePlayerPosition();
+            }
         }
     }
 }
