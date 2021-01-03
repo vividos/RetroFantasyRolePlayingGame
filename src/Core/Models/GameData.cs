@@ -65,6 +65,12 @@ namespace Game.Core.Models
         public string CurrentMapId { get; set; }
 
         /// <summary>
+        /// Returns the current map, as referenced by CurrentMapId
+        /// </summary>
+        [JsonIgnore]
+        public Map CurrentMap => AllMaps[this.CurrentMapId];
+
+        /// <summary>
         /// The player's (or party's) position on the current map
         /// </summary>
         public MapPosition PlayerPosition { get; set; }

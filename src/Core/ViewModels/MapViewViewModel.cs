@@ -27,7 +27,7 @@ namespace Game.Core.ViewModels
         /// <summary>
         /// Currently loaded map
         /// </summary>
-        private Map currentMap;
+        private Map currentMap => this.currentGameData.CurrentMap;
 
         /// <summary>
         /// Map visibility checking logic
@@ -91,10 +91,6 @@ namespace Game.Core.ViewModels
         /// </summary>
         public void UpdateTilemap()
         {
-            string currentMapId = this.currentGameData.CurrentMapId;
-
-            this.currentMap = GameData.AllMaps[currentMapId];
-
             string tiledMapFilename = this.currentMap.TiledMapFilename.Replace(".tmx", string.Empty);
             this.TileMap = this.contentManager.Load<TiledMap>(tiledMapFilename);
 
