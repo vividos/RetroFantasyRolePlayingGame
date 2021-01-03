@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\Credits.md = ..\Credits.md
 		..\DevelopmentLog.md = ..\DevelopmentLog.md
 		Directory.Build.props = Directory.Build.props
+		..\PlayerReference.md = ..\PlayerReference.md
 		..\README.md = ..\README.md
 		VersionAssemblyInfo.cs = VersionAssemblyInfo.cs
 	EndProjectSection
