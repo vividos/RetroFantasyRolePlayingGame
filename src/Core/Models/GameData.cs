@@ -59,6 +59,73 @@ namespace Game.Core.Models
             },
         };
 
+        /// <summary>
+        /// Mapping of tile index to tile info
+        /// </summary>
+        private static readonly Dictionary<int, TileInfo> TileInfoMap = new Dictionary<int, TileInfo>
+        {
+            {
+                0,
+                new TileInfo
+                {
+                    TileIndex = 0,
+                    IsSolid = true,
+                    IsBlockingVisibility = false,
+                    LookDescription = "You see deep ocean water.",
+                }
+            },
+            {
+                1,
+                new TileInfo
+                {
+                    TileIndex = 1,
+                    IsSolid = true,
+                    IsBlockingVisibility = false,
+                    LookDescription = "You see sea water.",
+                }
+            },
+            {
+                4,
+                new TileInfo
+                {
+                    TileIndex = 4,
+                    IsSolid = false,
+                    IsBlockingVisibility = false,
+                    LookDescription = "You see grassy land.",
+                }
+            },
+            {
+                6,
+                new TileInfo
+                {
+                    TileIndex = 6,
+                    IsSolid = false,
+                    IsBlockingVisibility = true,
+                    LookDescription = "You see dense forest.",
+                }
+            },
+            {
+                8,
+                new TileInfo
+                {
+                    TileIndex = 8,
+                    IsSolid = true,
+                    IsBlockingVisibility = true,
+                    LookDescription = "You see high mountains.",
+                }
+            },
+            {
+                57,
+                new TileInfo
+                {
+                    TileIndex = 57,
+                    IsSolid = true,
+                    IsBlockingVisibility = true,
+                    LookDescription = "You see a dry stone wall.",
+                }
+            }
+        };
+
         #endregion
 
         #region Dynamic game data
@@ -120,6 +187,21 @@ namespace Game.Core.Models
                 string json = reader.ReadToEnd();
                 return JsonConvert.DeserializeObject<GameData>(json);
             }
+        }
+
+        /// <summary>
+        /// Returns tile info object for given tile index
+        /// </summary>
+        /// <param name="tileIndex">tile index</param>
+        /// <returns>tile info, or null when none is available</returns>
+        public static TileInfo GetTileInfo(int tileIndex)
+        {
+            return TileInfoMap.TryGetValue(tileIndex, out TileInfo tileInfo)
+                ? tileInfo
+                : new TileInfo
+                {
+                    TileIndex = tileIndex
+                };
         }
     }
 }

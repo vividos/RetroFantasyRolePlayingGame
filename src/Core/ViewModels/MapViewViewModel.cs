@@ -155,12 +155,7 @@ namespace Game.Core.ViewModels
                 return null;
             }
 
-            return new TileInfo
-            {
-                TileIndex = tile.Value.GlobalIdentifier - 1,
-                // TODO get visibility property from somewhere else
-                IsBlockingVisibility = tile.Value.GlobalIdentifier == 58,
-            };
+            return GameData.GetTileInfo(tile.Value.GlobalIdentifier - 1);
         }
     }
 }
