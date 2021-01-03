@@ -27,7 +27,7 @@ namespace Game.Core.ViewModels
         /// <summary>
         /// Currently loaded map
         /// </summary>
-        private Map currentMap => this.currentGameData.CurrentMap;
+        private Map CurrentMap => this.currentGameData.CurrentMap;
 
         /// <summary>
         /// Map visibility checking logic
@@ -51,7 +51,7 @@ namespace Game.Core.ViewModels
         /// <returns>true when visible, false when not</returns>
         public bool IsTileVisible(MapPosition position)
         {
-            if (this.currentMap.UseVisibilityCheck)
+            if (this.CurrentMap.UseVisibilityCheck)
             {
                 return this.mapVisibility.IsVisible(position);
             }
@@ -91,7 +91,7 @@ namespace Game.Core.ViewModels
         /// </summary>
         public void UpdateTilemap()
         {
-            string tiledMapFilename = this.currentMap.TiledMapFilename.Replace(".tmx", string.Empty);
+            string tiledMapFilename = this.CurrentMap.TiledMapFilename.Replace(".tmx", string.Empty);
             this.TileMap = this.contentManager.Load<TiledMap>(tiledMapFilename);
 
             this.ObjectTileset = this.contentManager.Load<TiledMapTileset>("tilemaps/objects");
@@ -114,7 +114,7 @@ namespace Game.Core.ViewModels
             int mapX = position.X;
             int mapY = position.Y;
 
-            if (this.currentMap.EdgeType == Map.MapEdgeType.WrapAround)
+            if (this.CurrentMap.EdgeType == Map.MapEdgeType.WrapAround)
             {
                 if (mapX > this.TileMap.Width)
                 {
