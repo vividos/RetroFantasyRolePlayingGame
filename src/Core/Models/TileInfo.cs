@@ -19,5 +19,10 @@
         /// Indicates if the tile blocks visibility
         /// </summary>
         public bool IsBlockingVisibility { get; set; } = false;
+
+        /// <summary>
+        /// Contains the "look" description of this tile
+        /// </summary>
+        public string LookDescription { get; set; } = "You see nothing.";
     }
 }
