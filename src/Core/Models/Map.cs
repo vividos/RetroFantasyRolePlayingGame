@@ -16,6 +16,16 @@
         public string Name { get; set; }
 
         /// <summary>
+        /// Map width, in tiles
+        /// </summary>
+        public int Width { get; set; }
+
+        /// <summary>
+        /// Map height, in tiles
+        /// </summary>
+        public int Height { get; set; }
+
+        /// <summary>
         /// Relative filename of the Tiled map file for the map
         /// </summary>
         public string TiledMapFilename { get; set; }

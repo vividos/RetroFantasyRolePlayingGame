@@ -37,6 +37,8 @@ namespace Game.Core.Models
                 {
                     Id = "wilderness",
                     Name = "The Wilderness",
+                    Width = 64,
+                    Height = 64,
                     TiledMapFilename = "tilemaps/wilderness.tmx",
                     EdgeType = Map.MapEdgeType.WrapAround,
                     UseVisibilityCheck = true,
@@ -48,6 +50,8 @@ namespace Game.Core.Models
                 {
                     Id = "bobs-hut",
                     Name = "Bob's Hut",
+                    Width = 16,
+                    Height = 16,
                     TiledMapFilename = "tilemaps/bobs-hut.tmx",
                     EdgeType = Map.MapEdgeType.ExitMap,
                     UseVisibilityCheck = true,
