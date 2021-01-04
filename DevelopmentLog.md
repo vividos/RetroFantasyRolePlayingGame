@@ -1,5 +1,20 @@
 ﻿# Development Log
 
+## 2021-01-03 Day 9: Some refactoring
+
+After a december full of updating and releasing other projects, I returned to
+the RPG project. I did a bit of refactoring and moved tile info to the
+`GameData` class, as it's data that will be changed often during development.
+In the future this may even go into a JSON file loaded at startup, for easier
+editing. I also started a [player reference document](PlayerReference.md) that
+describes the non-fiction part of the game to the player, like user interface,
+controls, etc.
+
+Next up will be selection of tiles and objects in the map, as it's a major
+stepping stone for the user to interact with the world, through the action
+buttons (look, get, talk, use, attack, etc.). Also virtual game pad support
+for Android is on my list.
+
 ## 2020-11-28 Day 8: Map view
 
 The map view shows all tiles of a tile based map. The Ultima games show a
