@@ -5,7 +5,7 @@
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright © 2020 Vividos")]
+[assembly: AssemblyCopyright("Copyright © 2020-2021 Vividos")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
