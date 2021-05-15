@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
 
