@@ -10,4 +10,13 @@
   <PropertyGroup>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Add reference to SonarAnalyzer analyzers to all projects -->
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.*" PrivateAssets="all" />
+
+    <!-- Add reference to StyleCop analyzers to all projects -->
+    <PackageReference Include="StyleCop.Analyzers" Version="1.*" PrivateAssets="all" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
+  </ItemGroup>
 </Project>
